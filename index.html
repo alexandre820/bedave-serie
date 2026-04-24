@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="bedave — série animée courte, saison 01. Un brocoli, un ananas, un canapé. Inspiré de Bloqués d'Orelsan & Gringe.">
+<title>bedave — dossier de série, saison 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400;1,7..72,500&family=Inter:wght@400;500;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F1E3;
+    --paper-deep: #F2EBDA;
+    --paper-overlay: rgba(247, 241, 227, 0.92);
+    --ink: #1A1814;
+    --ink-soft: #4A453C;
+    --ink-mute: #8B8374;
+    --ink-whisper: #B0A898;
+    --line: #D4CDBB;
+    --line-soft: #E5DECC;
+    --green: #2D5D2D;
+    --green-deep: #1F3F1F;
+    --green-soft: rgba(45, 93, 45, 0.06);
+    --amber: #9B7828;
+    --shadow-soft: 0 4px 24px rgba(26, 24, 20, 0.06);
+    --shadow-mid: 0 12px 40px rgba(26, 24, 20, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Literata', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga" 1, "kern" 1;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: rgba(45, 93, 45, 0.2); color: var(--ink); }
+
+  em { font-style: italic; color: var(--green); }
+  strong { font-weight: 500; color: var(--ink); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============================
+     PROGRESS BAR
+     ============================ */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--green);
+    z-index: 100;
+    transition: width 0.08s linear;
+  }
+
+  /* ============================
+     SITE HEADER
+     ============================ */
+  .site-head {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper-overlay);
+    backdrop-filter: saturate(150%) blur(12px);
+    -webkit-backdrop-filter: saturate(150%) blur(12px);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 14px clamp(20px, 4vw, 40px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--green-deep);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .brand small {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-style: normal;
+    display: block;
+    margin-top: 2px;
+  }
+  .head-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 9px 16px;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.primary { background: var(--green); color: var(--paper); border-color: var(--green); }
+  .btn.primary:hover { background: var(--green-deep); border-color: var(--green-deep); }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    align-items: center;
+    gap: 8px;
+  }
+  .menu-toggle svg { width: 14px; height: 14px; }
+  @media (max-width: 1100px) {
+    .menu-toggle { display: inline-flex; }
+  }
+  @media (max-width: 640px) {
+    .btn:not(.primary) { display: none; }
+  }
+
+  /* ============================
+     LAYOUT
+     ============================ */
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+    max-width: 1360px;
+    margin: 0 auto;
+    gap: 0;
+  }
+  @media (max-width: 1100px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* ============================
+     TOC SIDEBAR (desktop)
+     ============================ */
+  .toc-sidebar {
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    padding: 48px 32px 48px 40px;
+    border-right: 1px solid var(--line-soft);
+  }
+  @media (max-width: 1100px) {
+    .toc-sidebar { display: none; }
+  }
+  .toc-sidebar::-webkit-scrollbar { width: 4px; }
+  .toc-sidebar::-webkit-scrollbar-track { background: transparent; }
+  .toc-sidebar::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+  .toc-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .toc-group { margin-bottom: 32px; }
+  .toc-group-title {
+    display: block;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .toc-group-title em { color: var(--green); }
+  .toc-group-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green);
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  .toc-links {
+    list-style: none;
+    padding-left: 0;
+    border-left: 1px solid var(--line-soft);
+  }
+  .toc-links li { position: relative; }
+  .toc-links a {
+    display: block;
+    padding: 6px 0 6px 16px;
+    font-family: 'Literata', serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    font-style: italic;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+  }
+  .toc-links a:hover {
+    color: var(--green);
+    padding-left: 20px;
+  }
+  .toc-links a em { color: var(--green); }
+  .toc-links a.active {
+    color: var(--green-deep);
+    border-left-color: var(--green);
+    font-weight: 500;
+  }
+
+  /* ============================
+     MOBILE DRAWER
+     ============================ */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 360px;
+    height: 100vh;
+    background: var(--paper);
+    box-shadow: -20px 0 60px rgba(0,0,0,0.12);
+    transform: translateX(105%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 80;
+    overflow-y: auto;
+    padding: 80px 28px 40px;
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+  }
+  .drawer-close svg { width: 16px; height: 16px; }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 18, 12, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 70;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .overlay.show { opacity: 1; pointer-events: auto; }
+
+  /* ============================
+     CONTENT
+     ============================ */
+  .content {
+    padding: 0 clamp(22px, 5vw, 60px);
+    max-width: 840px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .content > * { scroll-margin-top: 80px; }
+
+  /* ============================
+     HERO / COVER
+     ============================ */
+  .hero {
+    padding: clamp(80px, 14vh, 180px) 0 clamp(60px, 10vh, 120px);
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero .eyebrow::before, .hero .eyebrow::after {
+    content: '—';
+    color: var(--ink-mute);
+  }
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(88px, 20vw, 240px);
+    line-height: 0.82;
+    color: var(--green-deep);
+    letter-spacing: -0.04em;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .hero .subtitle {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(19px, 2.8vw, 28px);
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto 32px;
+    line-height: 1.35;
+    font-weight: 400;
+  }
+  .hero .ref {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 40px;
+  }
+  .hero .ref em { color: var(--green); font-style: italic; letter-spacing: 0.05em; }
+
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  @media (max-width: 640px) {
+    .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+  .hero-meta div { padding: 0 12px; }
+  .hero-meta .lbl {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 4px;
+  }
+  .hero-meta .val {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--green);
+    line-height: 1;
+  }
+
+  /* ============================
+     EPIGRAPH
+     ============================ */
+  .epigraph {
+    padding: clamp(80px, 14vh, 140px) 0;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .epigraph blockquote {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(26px, 5vw, 48px);
+    line-height: 1.3;
+    color: var(--ink);
+    max-width: 640px;
+    margin: 0 auto 20px;
+    position: relative;
+    font-weight: 400;
+  }
+  .epigraph blockquote::before {
+    content: '"';
+    font-size: 1.3em;
+    color: var(--green);
+    font-family: 'Instrument Serif', serif;
+  }
+  .epigraph blockquote::after {
+    content: '"';
+    font-size: 1.3em;
+    color: var(--green);
+    font-family: 'Instrument Serif', serif;
+  }
+  .epigraph cite {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-style: normal;
+  }
+
+  /* ============================
+     CHAPTER OPENER
+     ============================ */
+  .chapter-opener {
+    padding: clamp(70px, 12vh, 130px) 0 clamp(70px, 12vh, 130px);
+    border-bottom: 1px solid var(--line);
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .chapter-opener .chap-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .chapter-opener .chap-roman {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 28px);
+    color: var(--green);
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+  .chapter-opener h2 {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(56px, 12vw, 140px);
+    line-height: 0.92;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .chapter-opener h2 em { color: var(--green); }
+  .chapter-opener .chap-desc {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 560px;
+  }
+
+  /* ============================
+     SECTIONS
+     ============================ */
+  section.sec {
+    padding: clamp(50px, 9vh, 90px) 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  section.sec:last-of-type { border-bottom: none; }
+
+  .sec-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .sec-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(38px, 7vw, 72px);
+    line-height: 0.95;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+  .sec-title em { color: var(--green); }
+
+  h3.sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin: clamp(32px, 5vh, 50px) 0 16px;
+    font-weight: 400;
+  }
+  h3.sub em { color: var(--green); }
+
+  h4.label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 36px 0 16px;
+    font-weight: 500;
+  }
+
+  p {
+    margin-bottom: 16px;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 680px;
+  }
+  p strong { color: var(--ink); }
+
+  p.lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.6vw, 26px);
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 32px;
+    max-width: 680px;
+    font-weight: 400;
+  }
+  p.lede em { color: var(--green); }
+
+  blockquote.pull {
+    margin: 32px 0;
+    padding: 24px 28px;
+    background: var(--green-soft);
+    border-left: 3px solid var(--green);
+    border-radius: 0 6px 6px 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.2vw, 22px);
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 680px;
+  }
+  blockquote.pull em { color: var(--green); }
+
+  /* tags */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .tag {
+    padding: 4px 11px;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    background: transparent;
+  }
+
+  /* ============================
+     CHARACTER SHEETS
+     ============================ */
+  .char-sheet {
+    padding: clamp(32px, 5vh, 50px) 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .char-sheet:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .char-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .char-name {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 0.95;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .char-sheet.primary .char-name {
+    font-size: clamp(56px, 10vw, 100px);
+    color: var(--green);
+  }
+  .char-role {
+    text-align: right;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.8;
+  }
+  .char-role strong { color: var(--green); font-weight: 500; display: block; }
+
+  .char-body {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 10px 32px;
+  }
+  @media (max-width: 640px) {
+    .char-body { grid-template-columns: 1fr; gap: 2px 0; }
+    .char-body dd { margin-bottom: 16px; }
+  }
+  .char-body dt {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+    padding-top: 4px;
+  }
+  .char-body dd {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .char-body dd.catch {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--green);
+    line-height: 1.2;
+  }
+  .char-body dd.veo {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    line-height: 1.55;
+    padding: 16px 18px;
+    background: var(--paper-deep);
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* other persons grid */
+  .other-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px 32px;
+    margin-top: 24px;
+  }
+  .other-chip {
+    padding: 16px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .other-chip .o-n {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .other-chip .o-d {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ============================
+     COMMANDMENTS
+     ============================ */
+  .laws { margin-top: 20px; }
+  .law {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  @media (max-width: 640px) {
+    .law { grid-template-columns: 1fr; gap: 10px; }
+  }
+  .law:last-child { border-bottom: none; }
+  .law-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 0.9;
+    color: var(--green);
+  }
+  .law.key .law-num { color: var(--amber); }
+  .law-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .law-text {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .law-text em { color: var(--green); }
+  .law-text ul { list-style: none; padding-left: 0; margin-top: 10px; }
+  .law-text li {
+    padding-left: 20px;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .law-text li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--ink-mute);
+  }
+  .meta-box {
+    margin-top: 12px;
+    padding: 14px 18px;
+    background: var(--paper-deep);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 4px 4px 0;
+  }
+  .meta-box .ml { padding: 2px 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+  .meta-box .ml em { color: var(--green); font-style: italic; }
+  .meta-box .ml strong { color: var(--ink); }
+
+  /* ============================
+     EPISODE PITCHES
+     ============================ */
+  .pitch-list { margin-top: 24px; }
+  .pitch-item {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .pitch-item:last-child { border-bottom: none; }
+  .pitch-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .pitch-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 500;
+  }
+  .pitch-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .pitch-title em { color: var(--green); }
+  .pitch-log {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    max-width: 680px;
+  }
+  .pitch-chute {
+    padding: 14px 18px;
+    background: rgba(155, 120, 40, 0.06);
+    border-left: 2px solid var(--amber);
+    border-radius: 0 4px 4px 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 680px;
+  }
+  .pitch-chute::before {
+    content: 'CHUTE — ';
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--amber);
+    font-style: normal;
+    font-weight: 500;
+    margin-right: 8px;
+  }
+  .pitch-chute em { color: var(--green); }
+
+  /* ============================
+     STYLE TOKENS BLOCK
+     ============================ */
+  .style-tokens {
+    margin: 24px 0;
+    padding: 28px 32px;
+    background: var(--paper-deep);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ============================
+     EPISODE PRODUCTION (chap 2)
+     ============================ */
+  .ep-prod {
+    padding: clamp(60px, 10vh, 100px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ep-prod:last-of-type { border-bottom: none; }
+  .ep-prod-head {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .ep-prod-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .ep-prod-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(48px, 9vw, 96px);
+    line-height: 0.92;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .ep-prod-title em { color: var(--green); }
+  .ep-prod-lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2.3vw, 21px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 20px;
+  }
+
+  .chute-card {
+    padding: 18px 22px;
+    background: rgba(155, 120, 40, 0.06);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    max-width: 680px;
+  }
+  .chute-card .lbl {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .chute-card .txt {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(17px, 2.2vw, 20px);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .chute-card .txt em { color: var(--green); }
+
+  /* structure strip */
+  .structure-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 4px 8px;
+    margin: 20px 0 32px;
+  }
+  .beat-cell {
+    padding: 10px 14px;
+    border-left: 2px solid var(--green);
+    background: var(--paper-deep);
+  }
+  .beat-cell .bt {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 3px;
+  }
+  .beat-cell .bn {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .beat-cell .bd {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    line-height: 1.35;
+  }
+
+  /* shot block */
+  .shot {
+    margin-bottom: 24px;
+    padding: 24px 28px;
+    background: var(--paper-deep);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+  }
+  .shot-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-soft);
+    flex-wrap: wrap;
+  }
+  .shot-num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1;
+    color: var(--green);
+  }
+  .shot-time {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .shot-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-left: auto;
+  }
+  .shot-desc {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .shot-desc strong { color: var(--ink); }
+  .shot-prompt-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .shot-prompt-body {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 16px 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .shot-prompt-body strong { color: var(--green); font-weight: 700; }
+
+  /* ============================
+     SCRIPT FORMAT (cinema)
+     ============================ */
+  .script-block {
+    padding: clamp(28px, 4vw, 48px) clamp(22px, 3vw, 40px);
+    background: var(--paper-deep);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    margin: 20px 0;
+  }
+  .sc-cue {
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .sc-cue.chute { color: var(--amber); border-bottom-color: var(--amber); }
+  .sc-cue:first-child { margin-top: 0; }
+
+  .sc-stage {
+    font-family: 'Literata', serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+    padding: 8px clamp(20px, 8vw, 60px);
+    margin: 10px 0;
+    text-align: left;
+  }
+  .sc-silence {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    text-align: center;
+    padding: 6px 0;
+    margin: 8px 0;
+  }
+  .sc-dialog {
+    margin: 14px 0;
+    padding: 0 clamp(10px, 4vw, 40px);
+  }
+  .sc-char {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 3px;
+  }
+  .sc-paren {
+    font-family: 'Literata', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    text-align: center;
+    margin-bottom: 3px;
+  }
+  .sc-line {
+    font-family: 'Literata', serif;
+    font-size: clamp(15px, 1.8vw, 18px);
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink);
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .sc-dialog[data-shout="true"] .sc-line {
+    color: var(--amber);
+    font-weight: 500;
+    font-style: italic;
+  }
+  .sc-dialog[data-shout="true"] .sc-char {
+    color: var(--amber);
+  }
+
+  /* ============================
+     SCRIPT EPISODE HEADER
+     ============================ */
+  .scr-ep {
+    padding: clamp(60px, 10vh, 100px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .scr-ep:last-of-type { border-bottom: none; }
+  .scr-ep-head {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .scr-ep-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .scr-ep-title {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(44px, 8vw, 84px);
+    line-height: 0.95;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+  .scr-ep-title em { color: var(--green); }
+  .scr-ep-log {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.2vw, 20px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin-bottom: 18px;
+  }
+
+  /* ============================
+     COLOPHON
+     ============================ */
+  .colophon {
+    padding: clamp(100px, 16vh, 200px) 0;
+    text-align: center;
+  }
+  .co-mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(80px, 14vw, 160px);
+    line-height: 0.9;
+    color: var(--green);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .co-phrase {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 480px;
+    margin: 0 auto 48px;
+  }
+  .co-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 2;
+  }
+  .co-meta em { color: var(--green); font-style: normal; letter-spacing: 0.05em; }
+
+  /* ============================
+     FLOATING BACK TO TOP
+     ============================ */
+  .back-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 40;
+    box-shadow: var(--shadow-soft);
+  }
+  .back-top.show { opacity: 1; pointer-events: auto; }
+  .back-top:hover { transform: translateY(-2px); background: var(--green); }
+  .back-top svg { width: 18px; height: 18px; }
+
+  /* ============================
+     PRINT
+     ============================ */
+  @media print {
+    .site-head, .toc-sidebar, .back-top, .drawer, .overlay, .progress { display: none; }
+    .layout { grid-template-columns: 1fr; }
+    body { background: white; }
+    .content { max-width: 100%; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress" id="progress"></div>
+
+<!-- Overlay for mobile drawer -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Mobile drawer -->
+<aside class="drawer" id="drawer" aria-label="Table des matières mobile">
+  <button class="drawer-close" id="drawerClose" aria-label="Fermer le sommaire">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="toc-label">Sommaire</div>
+  <nav id="mobileTOC"></nav>
+</aside>
+
+<!-- Site header -->
+<header class="site-head">
+  <a href="#top" class="brand">
+    bedave.
+    <small>dossier · saison 01</small>
+  </a>
+  <div class="head-actions">
+    <a href="bedave-dossier-complet.pdf" class="btn primary" download>Télécharger PDF</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le sommaire">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      Sommaire
+    </button>
+  </div>
+</header>
+
+<div class="layout" id="top">
+
+<!-- ==================================
+     TOC SIDEBAR (desktop)
+================================== -->
+<aside class="toc-sidebar" id="tocSidebar">
+  <div class="toc-label">— Sommaire</div>
+
+  <div class="toc-group">
+    <a href="#hero" class="toc-group-title">Préambule</a>
+    <ul class="toc-links">
+      <li><a href="#epigraph">Épigraphe</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-group">
+    <span class="toc-group-num">chapitre i</span>
+    <a href="#chap-1" class="toc-group-title">L'<em>œuvre</em></a>
+    <ul class="toc-links">
+      <li><a href="#pitch">Pitch en cinq lignes</a></li>
+      <li><a href="#univers">L'appart</a></li>
+      <li><a href="#casting">Le casting</a></li>
+      <li><a href="#commandements">11 commandements</a></li>
+      <li><a href="#episodes-10">Les dix épisodes</a></li>
+      <li><a href="#style-veo">Style guide Veo</a></li>
+    </ul>
+  </div>
+
+  <div class="toc-group">
+    <span class="toc-group-num">chapitre ii</span>
+    <a href="#chap-2" class="toc-group-title">Les <em>pilotes</em></a>
+    <ul class="toc-links">
+      <li><a href="#ep01">EP 01 · La <em>Salade</em></a></li>
+      <li><a href="#ep02">EP 02 · <em>Serge</em></a></li>
+      <li><a href="#ep03">EP 03 · <em>Momo</em></a></li>
+    </ul>
+  </div>
+
+  <div class="toc-group">
+    <span class="toc-group-num">chapitre iii</span>
+    <a href="#chap-3" class="toc-group-title">Les <em>scripts</em></a>
+    <ul class="toc-links">
+      <li><a href="#ep04">EP 04 · Les <em>Chips</em></a></li>
+      <li><a href="#ep05">EP 05 · Le <em>Livreur</em></a></li>
+      <li><a href="#ep06">EP 06 · Le <em>Rêve</em></a></li>
+      <li><a href="#ep07">EP 07 · <em>Radiskov</em></a></li>
+      <li><a href="#ep08">EP 08 · La <em>Voisine</em></a></li>
+      <li><a href="#ep09">EP 09 · <em>Avo</em></a></li>
+      <li><a href="#ep10">EP 10 · Le <em>Dimanche</em></a></li>
+    </ul>
+  </div>
+</aside>
+
+<!-- ==================================
+     MAIN CONTENT
+================================== -->
+<main class="content">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="eyebrow">Série animée · 2026 · v3.0</div>
+    <h1>bedave.</h1>
+    <p class="subtitle">Un brocoli, un ananas, un canapé, une TV allumée. Parfois un parano appelle. Parfois un mito passe. Parfois le dealer pète un câble.</p>
+    <div class="ref">inspiré de <em>bloqués</em> — orelsan &amp; gringe</div>
+
+    <div class="hero-meta">
+      <div><div class="lbl">Principaux</div><div class="val">2</div></div>
+      <div><div class="lbl">Récurrents</div><div class="val">4</div></div>
+      <div><div class="lbl">Épisodes</div><div class="val">10</div></div>
+      <div><div class="lbl">Format</div><div class="val">45 s</div></div>
+    </div>
+  </section>
+
+  <!-- EPIGRAPH -->
+  <section class="epigraph" id="epigraph">
+    <blockquote>Rien ne se passe. Jusqu'à la chute.</blockquote>
+    <cite>— principe narratif n° 10</cite>
+  </section>
+
+  <!-- ==============================
+       CHAPITRE I
+  ============================== -->
+  <section class="chapter-opener" id="chap-1">
+    <div class="chap-eyebrow">— chapitre premier</div>
+    <div class="chap-roman">I</div>
+    <h2>L'<em>œuvre</em>.</h2>
+    <p class="chap-desc">Pitch, univers, casting, règles narratives, pitchs d'épisodes, style guide. Le doc de fond. Ce qui fait que <em>bedave</em> n'est pas juste un sketch mais une série.</p>
+  </section>
+
+  <!-- I.1 PITCH -->
+  <section class="sec" id="pitch">
+    <div class="sec-eyebrow">I.1 — Pitch</div>
+    <h2 class="sec-title">Le <em>pitch</em> en cinq lignes.</h2>
+
+    <p class="lede"><em>bedave</em> suit Brocco (brocoli) et Nanas (ananas), deux colocs qui vivent dans un appart moyen d'une ville moyenne. Ils sont des légumes-fruits. Mais ils vivent comme des humains — canapé défoncé, TV allumée en permanence, bouffe qui traîne, fringues par terre.</p>
+
+    <p>Parfois des potes débarquent : <strong>Champi</strong> le parano, <strong>Serge</strong> le mito, <strong>Momo</strong> le dealer bipolaire. Il se passe jamais rien d'exceptionnel. <em>Sauf que si.</em> Et ça retombe toujours d'une manière qu'on n'attendait pas.</p>
+
+    <blockquote class="pull">Inspiré par <em>Bloqués</em> (Orelsan &amp; Gringe). Format court, plan fixe, dialogues lents, chutes sèches. Rien ne se passe, jusqu'à la chute.</blockquote>
+  </section>
+
+  <!-- I.2 UNIVERS -->
+  <section class="sec" id="univers">
+    <div class="sec-eyebrow">I.2 — Univers</div>
+    <h2 class="sec-title">L'<em>appart</em>.</h2>
+
+    <h3 class="sub">Le lieu <em>central</em></h3>
+    <p>Un 2-pièces pas ouf dans une ville qu'on nomme jamais. Lumière jaune chaude d'une lampe de chevet posée à côté de la TV, store à moitié descendu, <strong>canapé en velours fatigué vert olive</strong>, table basse encombrée : manette de console, cendrier avec des paillettes dorées, tasse pas lavée, bol de céréales à moitié mangé, chargeur qui traîne, magazine plié.</p>
+    <p>Plante en pot qui crève dans un coin. Poster au mur (Naruto, Tupac, Casa de Papel). La TV est allumée. Toujours. Elle diffuse un truc absurde en mute : téléachat, gameplay en pause, documentaire sur les castors, télé-réalité sans le son.</p>
+    <p>Ils sortent rarement. Le canapé c'est le centre du monde. <strong>Les guests viennent à eux</strong> — ils sonnent, ils rentrent, ils s'assoient, ils repartent. Ou ils appellent en FaceTime et apparaissent sur la TV.</p>
+
+    <h3 class="sub">La <em>tonalité</em> visuelle</h3>
+    <p><strong>Plan fixe.</strong> Un seul angle la plupart du temps — canapé vu de face, léger grand-angle, caméra strictement fixe. Animation 2D/3D <em>limited</em> (Bojack Horseman × Cyprien × claymation simple). Pas de Pixar, pas de fisheye. Sobre.</p>
+    <p>Les personnages bougent peu — tête, yeux, mains. Les expressions faciales portent tout le jeu.</p>
+
+    <div class="tag-row">
+      <span class="tag">jaune lampe halogène</span>
+      <span class="tag">bleu cathode TV</span>
+      <span class="tag">velours olive</span>
+      <span class="tag">brun moquette</span>
+      <span class="tag">rose chips</span>
+      <span class="tag">dimanche pluvieux</span>
+    </div>
+
+    <p><strong>Son.</strong> Bourdonnement doux de la TV en sous-couche. Silence. Pas de musique la plupart du temps. Pas de rire enregistré, jamais.</p>
+  </section>
+
+  <!-- I.3 CASTING -->
+  <section class="sec" id="casting">
+    <div class="sec-eyebrow">I.3 — Casting</div>
+    <h2 class="sec-title">Le <em>casting</em>.</h2>
+
+    <h4 class="label">— Duo principal</h4>
+
+    <div class="char-sheet primary">
+      <div class="char-head">
+        <div class="char-name">Brocco</div>
+        <div class="char-role"><strong>Brocoli</strong>le Orelsan</div>
+      </div>
+      <dl class="char-body">
+        <dt>Personnalité</dt><dd>Chill absolu. Deadpan. Pragmatique. Blasé mais pas méchant. Répond par <em>mmh</em>, <em>ouais</em>, <em>non</em>. Rarement plus de six mots. Quand il parle, on écoute — c'est souvent lui qui clôt le sketch.</dd>
+        <dt>Backstory</dt><dd>Ancien légume bio en AMAP tombé d'un panier pendant un déménagement. Atterri coloc chez Nanas par petite annonce. Y est resté trois ans.</dd>
+        <dt>Voix</dt><dd>Grave, lente, monocorde, chuchotée. Orelsan à 3 h du matin.</dd>
+        <dt>Catchphrase</dt><dd class="catch">« Ouais bah. »</dd>
+        <dt>Veo token</dt>
+        <dd class="veo">A young-adult anthropomorphic broccoli character seated on a worn-out couch. Bumpy deep forest-green florets on top forming a soft round head, pale cream-yellow cylindrical stem-body, large round half-lidded tired eyes, small closed mouth usually neutral. Wears a black Adidas-style tracksuit with three white stripes and a faded purple knitted beanie tilted slightly askew. Slouched low with legs spread, hands resting on thighs.</dd>
+      </dl>
+    </div>
+
+    <div class="char-sheet primary">
+      <div class="char-head">
+        <div class="char-name">Nanas</div>
+        <div class="char-role"><strong>Ananas</strong>le positif</div>
+      </div>
+      <dl class="char-body">
+        <dt>Personnalité</dt><dd>Chill positif. Sourire permanent léger. Accent antillais pas forcé. Dit <em>grave</em> et <em>c'est beau</em> pour valider. Trouve tout cool par défaut. A des éclairs de lucidité débile par moments. Le contrepoint solaire de Brocco.</dd>
+        <dt>Backstory</dt><dd>Vient de Trappes originellement (ananas de serre). Rêve de la Guadeloupe qu'il a jamais vue. Travaille deux jours par semaine chez un fleuriste.</dd>
+        <dt>Voix</dt><dd>Chaude, souriante, débit moyen. Entre Axiom et un pote de soirée en fin de soirée.</dd>
+        <dt>Catchphrase</dt><dd class="catch">« Grave. » / « C'est beau. »</dd>
+        <dt>Veo token</dt>
+        <dd class="veo">A young-adult anthropomorphic pineapple character seated on the couch next to the broccoli. Golden-yellow matte spiky pineapple body as torso, vibrant green spiky leaves on top like a mohawk-crown, large friendly warm brown eyes, wide gentle smile. Wears no shirt, baggy floral Hawaiian-print shorts, a thin shell necklace, mismatched sandals with socks. Relaxed open posture, one arm draped along the back of the couch.</dd>
+      </dl>
+    </div>
+
+    <h4 class="label">— Récurrents</h4>
+
+    <div class="char-sheet">
+      <div class="char-head">
+        <div class="char-name">Champi</div>
+        <div class="char-role"><strong>Champignon</strong>le parano complots</div>
+      </div>
+      <dl class="char-body">
+        <dt>Rôle</dt><dd>Théoricien du complot à plein temps. A arrêté la salade y'a six mois « pour voir ». Chuchote même seul. Chaque conversation commence par <em>« les gars, écoutez. »</em></dd>
+        <dt>Fréquence</dt><dd>Trois à quatre fois par saison, souvent en FaceTime.</dd>
+        <dt>Voix</dt><dd>Rauque, pressée, chuchotée.</dd>
+      </dl>
+    </div>
+
+    <div class="char-sheet">
+      <div class="char-head">
+        <div class="char-name">Serge</div>
+        <div class="char-role"><strong>Cornichon</strong>le mito</div>
+      </div>
+      <dl class="char-body">
+        <dt>Rôle</dt><dd>Mythomane pathologique. Prétend connaître tout le monde (Booba, Macron, Jamel, le gérant du KFC de Vitry). Se contredit dans la même phrase. Ne se rend jamais compte qu'il est démasqué.</dd>
+        <dt>Fréquence</dt><dd>Deux à trois fois par saison, en personne.</dd>
+        <dt>Voix</dt><dd>Nasillarde, confidentielle. Fabrice Luchini qui fait du mytho.</dd>
+        <dt>Catchphrase</dt><dd class="catch">« Nan mais genre écoute… »</dd>
+      </dl>
+    </div>
+
+    <div class="char-sheet">
+      <div class="char-head">
+        <div class="char-name">Momo</div>
+        <div class="char-role"><strong>Aubergine</strong>le dealer bipolaire</div>
+      </div>
+      <dl class="char-body">
+        <dt>Rôle</dt><dd>Chill absolu 90 % du temps. Sourit, pose des questions sur ta mère, appelle Brocco et Nanas « les bébés ». Explose en agression instantanément pendant trois à cinq secondes. Redevient chill sans transition. Référence : <em>Tuco dans Breaking Bad</em>.</dd>
+        <dt>Fréquence</dt><dd>Deux à trois fois par saison, passe livrer.</dd>
+        <dt>Voix</dt><dd>Grave, chaleureuse (DJ Abdel / JoeyStarr calme). Quand il explose : aiguë stridente.</dd>
+      </dl>
+    </div>
+
+    <div class="char-sheet">
+      <div class="char-head">
+        <div class="char-name">Radiskov</div>
+        <div class="char-role"><strong>Radis</strong>le startup-bro</div>
+      </div>
+      <dl class="char-body">
+        <dt>Rôle</dt><dd>Hyperactif, pitch deck permanent, franglais faux accent russe-cali, entend « raise » dans sa tête. Débarque avec <em>l'idée</em>. Brocco dit non.</dd>
+        <dt>Fréquence</dt><dd>Deux fois par saison.</dd>
+      </dl>
+    </div>
+
+    <div class="char-sheet">
+      <div class="char-head">
+        <div class="char-name">Avo</div>
+        <div class="char-role"><strong>Avocat</strong>le poète dépressif</div>
+      </div>
+      <dl class="char-body">
+        <dt>Rôle</dt><dd>Passe pleurer sur le canapé. Récite des poèmes. Champi lui fait du thé à distance via FaceTime.</dd>
+        <dt>Fréquence</dt><dd>Deux fois maximum par saison.</dd>
+      </dl>
+    </div>
+
+    <h4 class="label">— Autres personnages proposés</h4>
+    <div class="other-grid">
+      <div class="other-chip"><div class="o-n">Fraise</div><div class="o-d">Copine occasionnelle de Brocco. Passe quand elle veut. Jamais explicite, un peu planante.</div></div>
+      <div class="other-chip"><div class="o-n">Kévin l'épi de maïs</div><div class="o-d">Livreur de pizzas récurrent. Fatigué, écrit des tweets suicidaires.</div></div>
+      <div class="other-chip"><div class="o-n">Monsieur Patate</div><div class="o-d">Concierge grincheux, hait les jeunes légumes.</div></div>
+      <div class="other-chip"><div class="o-n">Carlos la Carotte</div><div class="o-d">Chauffeur VTC fou, parle tout seul, théories sur Dieu.</div></div>
+      <div class="other-chip"><div class="o-n">Brigitte</div><div class="o-d">Cousine de Brocco, brocoli bobo parisienne, juge tout.</div></div>
+      <div class="other-chip"><div class="o-n">La Voisine</div><div class="o-d">Vieille tomate cerise, vient chercher son basilic.</div></div>
+    </div>
+  </section>
+
+  <!-- I.4 COMMANDEMENTS -->
+  <section class="sec" id="commandements">
+    <div class="sec-eyebrow">I.4 — Narration</div>
+    <h2 class="sec-title">Les onze <em>commandements</em>.</h2>
+    <p class="lede">Les règles narratives et techniques à tenir dans chaque épisode. Si l'un de ces principes est cassé, l'épisode doit être réécrit.</p>
+
+    <div class="laws">
+      <div class="law"><div class="law-num">i</div><div><div class="law-title">Plan fixe canapé.</div><div class="law-text">Quatre-vingts à quatre-vingt-dix pour cent en <strong>un seul plan</strong>. Canapé face caméra, léger grand-angle, caméra strictement fixe. Pas de zoom, pas de travelling.</div></div></div>
+
+      <div class="law"><div class="law-num">ii</div><div><div class="law-title">Le texte porte tout.</div><div class="law-text">Les persos bougent peu. Aucun gag visuel complexe. Pas de slapstick.</div></div></div>
+
+      <div class="law"><div class="law-num">iii</div><div><div class="law-title">Le silence compte.</div><div class="law-text">Deux à trois secondes entre deux répliques, c'est normal. <strong>Le vide, c'est la moitié du gag.</strong></div></div></div>
+
+      <div class="law"><div class="law-num">iv</div><div><div class="law-title">Les catchphrases.</div><div class="law-text">Brocco : <em>« Ouais bah. »</em> Nanas : <em>« Grave. »</em> / <em>« C'est beau. »</em> Plusieurs fois par épisode.</div></div></div>
+
+      <div class="law"><div class="law-num">v</div><div><div class="law-title">La TV en fond.</div><div class="law-text">Toujours allumée, toujours en mute. Sert aussi de portail pour les FaceTime entrants.</div></div></div>
+
+      <div class="law"><div class="law-num">vi</div><div><div class="law-title">Métaphore bouffe.</div><div class="law-text">Jamais explicite. Les codes :
+        <div class="meta-box">
+          <div class="ml"><em>Salade</em> = herbe / weed <strong>(« t'as de la salade ? », « le marchand de salade »)</strong></div>
+          <div class="ml"><em>Sandwich</em> = joint <strong>(« je me roule un sandwich »)</strong></div>
+          <div class="ml"><em>Boulettes</em> = shit <strong>(« Momo a ramené les boulettes »)</strong></div>
+          <div class="ml"><em>Menthe / basilic / roquette</em> = leurres <strong>pour les quiproquos</strong></div>
+        </div>
+      </div></div></div>
+
+      <div class="law"><div class="law-num">vii</div><div><div class="law-title">Flashbacks rares et courts.</div><div class="law-text">Maximum deux à trois secondes. Muets ou presque. Visuellement simples.</div></div></div>
+
+      <div class="law"><div class="law-num">viii</div><div><div class="law-title">Le décor évolue pas.</div><div class="law-text">Les mêmes objets d'un épisode à l'autre. <strong>Running gag visuel</strong> — la pizza qui rétrécit, la plante qui meurt.</div></div></div>
+
+      <div class="law"><div class="law-num">ix</div><div><div class="law-title">Les guests viennent à eux.</div><div class="law-text">Sonnent, rentrent, s'assoient, repartent. Ou FaceTime sur la TV. <strong>Brocco et Nanas ne bougent quasi jamais.</strong></div></div></div>
+
+      <div class="law key"><div class="law-num">x</div><div><div class="law-title">La chute.</div><div class="law-text"><strong>Chaque épisode a une vraie chute qui retourne la situation.</strong> Pas de fade-out vide. Trois options :
+        <ul>
+          <li><em>Révélation visuelle</em> — un truc caché révélé en dernier plan.</li>
+          <li><em>Punchline sèche</em> — une ligne qui recontextualise toute la scène.</li>
+          <li><em>Cassure du schéma</em> — Brocco rompt le deadpan pour une ligne inattendue.</li>
+        </ul>
+        <em>Bloqués avait des chutes. Nous aussi.</em>
+      </div></div></div>
+
+      <div class="law"><div class="law-num">xi</div><div><div class="law-title">Outro.</div><div class="law-text">Logo <em>bedave</em> en graffiti vert dripping sur fond noir après la chute. Bourdonnement TV qui s'éteint.</div></div></div>
+    </div>
+  </section>
+
+  <!-- I.5 PITCHS -->
+  <section class="sec" id="episodes-10">
+    <div class="sec-eyebrow">I.5 — Saison 01</div>
+    <h2 class="sec-title">Les dix <em>épisodes</em>.</h2>
+    <p class="lede">Les dix arcs narratifs de la saison 1, chacun avec sa chute. Les trois premiers sont les pilotes, détaillés au chapitre II.</p>
+
+    <div class="pitch-list">
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 01</span><span class="pitch-title">La <em>Salade</em></span></div><p class="pitch-log">Champi appelle en FaceTime, parano. Il a vu une feuille chez eux — « c'est une feuille de surveillance ». Brocco lui dit que c'est du basilic.</p><div class="pitch-chute">Brocco soulève le coussin et sort un gros Tupperware de salade fraîche. <em>« On s'en fait un sandwich ? »</em> — <em>« Grave. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 02</span><span class="pitch-title"><em>Serge</em></span></div><p class="pitch-log">Serge le Cornichon passe avec « un sandwich d'Amsterdam, 15 références, 200 balles ». Il récite. Brocco sent le sachet. C'est de la menthe de Franprix.</p><div class="pitch-chute"><em>« J'lui ai prêté 50 € à mon dealer. » — « À Amsterdam ? » — « Nan. À celui de Franprix. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 03</span><span class="pitch-title"><em>Momo</em></span></div><p class="pitch-log">Momo l'Aubergine livre deux boulettes. Il parle du printemps. <em>« Pourquoi tu comptes l'argent devant moi Brocco ?! »</em> Crise de cinq secondes. Redevient chill.</p><div class="pitch-chute"><em>« ... on change de dealer ? » — « Ouais faudrait. » — « Tu veux une boulette ? » — « Ouais. »</em> Ils changeront jamais.</div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 04</span><span class="pitch-title">Les <em>Chips</em></span></div><p class="pitch-log">Il reste trois chips dans le paquet. Débat moral sur qui les mange. Invention d'un système équitable. Pierre-feuille-ciseaux.</p><div class="pitch-chute">Nanas a mangé les trois pendant que Brocco pitchait. <em>« T'as mangé les chips ? » — « Non. »</em> Miettes jaunes.</div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 05</span><span class="pitch-title">Le <em>Livreur</em></span></div><p class="pitch-log">Brocco et Nanas attendent Kévin l'épi de maïs. Il arrive et reste trente secondes sur le pas de la porte à raconter son divorce.</p><div class="pitch-chute"><em>« Il allait bien Kévin ? » — « Non. » — « Cool. » — « Enfin, cool, non. Cool j'ai faim je veux dire. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 06</span><span class="pitch-title">Le <em>Rêve</em></span></div><p class="pitch-log">Champi raconte un rêve long et décousu sur des abeilles qui parlent espagnol. Brocco fait semblant d'écouter.</p><div class="pitch-chute"><em>« Tu crois que ça veut dire quoi ? » — « J'ai pas écouté. »</em> Nanas : <em>« Moi je pense que c'est ta mère. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 07</span><span class="pitch-title"><em>Radiskov</em></span></div><p class="pitch-log">Radiskov débarque avec son idée : <em>Plant-BNB</em> (Airbnb pour plantes). Brocco dit non quatre fois. Il repart.</p><div class="pitch-chute">Nanas, après : <em>« Ça peut marcher quand même. » — « Non. » — « Si. » — « Non. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 08</span><span class="pitch-title">La <em>Voisine</em></span></div><p class="pitch-log">La voisine tomate cerise sonne. Elle cherche son basilic posé chez eux y'a trois semaines. Brocco regarde la plante morte du coin.</p><div class="pitch-chute">Ils lui donnent la plante morte. <em>« Elle est un peu sèche. » — « Merci mon petit. »</em> <em>« On a plus de plante. » — « Mmh. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 09</span><span class="pitch-title"><em>Avo</em></span></div><p class="pitch-log">Avo sonne en crise. Récite un poème sur l'automne. Brocco lui met un plaid. Champi fait du thé via FaceTime. Avo s'endort.</p><div class="pitch-chute"><em>« Il écrit de mieux en mieux, Avo. » — « Grave. Mais c'est toujours triste. »</em></div></div>
+
+      <div class="pitch-item"><div class="pitch-head"><span class="pitch-num">EP 10</span><span class="pitch-title">Le <em>Dimanche</em></span></div><p class="pitch-log">Brocco et Nanas disent « faudrait qu'on fasse un truc » pendant quarante-cinq secondes. On sonne à la fin. Ils ouvrent pas.</p><div class="pitch-chute"><em>« Faudrait qu'on ouvre. » — « Ouais faudrait. »</em> Ils ouvrent pas. Ils ont rien fait du tout. Et c'est exactement ce qu'ils voulaient.</div></div>
+    </div>
+  </section>
+
+  <!-- I.6 STYLE VEO -->
+  <section class="sec" id="style-veo">
+    <div class="sec-eyebrow">I.6 — Production</div>
+    <h2 class="sec-title">Style guide <em>Veo / Sora</em>.</h2>
+    <p class="lede">Principe : tout doit être simple pour l'IA. Plan fixe. Deux ou trois persos maximum. Zéro mouvement caméra. Animation limitée. Style tokens à coller au début de <em>chaque</em> prompt vidéo.</p>
+
+    <div class="style-tokens">STYLE — Stylized semi-realistic 2D/3D hybrid animation with limited animation aesthetic (French-contemporary cartoon style, Bojack Horseman meets Cyprien sketches meets low-fi 3D claymation). Matte textured characters, muted desaturated palette: dusty olive-green velvet couch, warm amber lamp light, cold cyan TV light flickering, brown carpet, beige walls with peeling paint.
+
+LOCATION — interior of a small modest French apartment living room. Sagging olive-green velvet couch facing a flatscreen TV. Cluttered coffee table, half-lowered window blinds, dying potted plant in corner, vintage poster on wall, clothes on the floor.
+
+LIGHT — warm amber key light from a bedside lamp on the right, cool cyan rim light from the TV on the left, soft deep shadows.
+
+CAMERA — strictly static, locked-off, NO camera movement, slight wide-angle.
+
+ANIMATION — extremely limited. Only minor head and hand movements. Expressions carry the scene. No complex body motion.
+
+AUDIO — muffled TV hum in background, long silences preserved, no laugh track ever.
+
+FORMAT — 9:16 vertical.
+
+REFERENCE — Bloqués by Orelsan &amp; Gringe.</div>
+  </section>
+
+  <!-- ==============================
+       CHAPITRE II
+  ============================== -->
+  <section class="chapter-opener" id="chap-2">
+    <div class="chap-eyebrow">— chapitre deuxième</div>
+    <div class="chap-roman">II</div>
+    <h2>Les trois <em>pilotes</em>.</h2>
+    <p class="chap-desc">Les trois premiers épisodes en dossier de production complet. Structure, découpage plan par plan, prompts Veo, script cinéma. Prêts à tourner.</p>
+  </section>
+
+  <!-- EP 01 -->
+  <article class="ep-prod" id="ep01">
+    <div class="ep-prod-head">
+      <div class="ep-prod-eyebrow">II.1 — Épisode 01 — pilote</div>
+      <h2 class="ep-prod-title">La <em>Salade</em>.</h2>
+      <p class="ep-prod-lede">Champi appelle Brocco et Nanas en FaceTime, complètement parano. Il a vu une feuille chez eux la veille. Il pense que c'est une feuille de surveillance. Brocco lui dit que c'est du basilic. Champi raccroche convaincu que c'est pire.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Brocco soulève le coussin et sort un gros Tupperware de salade fraîche. <em>« On s'en fait un sandwich ? »</em> — <em>« Grave. »</em></div></div>
+    </div>
+
+    <h4 class="label">— Structure</h4>
+    <div class="structure-strip">
+      <div class="beat-cell"><div class="bt">00–03</div><div class="bn">Hook</div><div class="bd">silence, TV bleue</div></div>
+      <div class="beat-cell"><div class="bt">03–08</div><div class="bn">Appel</div><div class="bd">ringtone FaceTime</div></div>
+      <div class="beat-cell"><div class="bt">08–22</div><div class="bn">Théorie</div><div class="bd">feuille de surveillance</div></div>
+      <div class="beat-cell"><div class="bt">22–30</div><div class="bn">Escalade</div><div class="bd">instructions absurdes</div></div>
+      <div class="beat-cell"><div class="bt">30–38</div><div class="bn">Débrief</div><div class="bd">Champi raccroche</div></div>
+      <div class="beat-cell"><div class="bt">38–45</div><div class="bn">Chute</div><div class="bd">coussin + Tupperware</div></div>
+    </div>
+
+    <h4 class="label">— Découpage en trois plans</h4>
+
+    <div class="shot">
+      <div class="shot-head"><span class="shot-num">01</span><span class="shot-time">00:00 — 00:40</span><span class="shot-tag">Plan principal</span></div>
+      <p class="shot-desc"><strong>Plan fixe wide du canapé.</strong> Brocco à gauche, Nanas à droite. TV hors-champ projetant de la lumière bleue. Table basse avec un petit brin de basilic. La TV sonne (FaceTime), Nanas décroche, Champi apparaît sur la TV, monologue parano, raccroche.</p>
+      <div class="shot-prompt-label">— Prompt Veo 3</div>
+      <div class="shot-prompt-body">[STYLE TOKENS] <strong>Shot</strong> — wide static head-on shot of a worn-out olive-green velvet couch facing camera, two characters seated on it. <strong>Left</strong> — anthropomorphic broccoli (forest-green bumpy florets, pale cream stem-body, purple knitted beanie askew, black Adidas tracksuit), slouched, half-lidded tired eyes. <strong>Right</strong> — anthropomorphic pineapple (spiky golden-yellow body, green mohawk-crown leaves, warm smile, no shirt, floral Hawaiian shorts, shell necklace). Coffee table in front with game controller, mug, cereal bowl, and a small bright-green fresh basil sprig visible. Dying potted plant left. <strong>Camera</strong> — strictly static, locked off, NO movement. <strong>Mood</strong> — stoner chill, deadpan. 9:16 vertical, up to 40 seconds.</div>
+    </div>
+
+    <div class="shot">
+      <div class="shot-head"><span class="shot-num">02</span><span class="shot-time">~00:08 · 6s</span><span class="shot-tag">Cut-in TV — FaceTime</span></div>
+      <p class="shot-desc">Tight sur la TV affichant Champi en plein FaceTime parano — visage en sueur, caméra qui tremble, chuchotements conspiratoires.</p>
+      <div class="shot-prompt-label">— Prompt Veo 3</div>
+      <div class="shot-prompt-body">[STYLE TOKENS] <strong>Shot</strong> — tight static shot on a flatscreen TV displaying a paranoid FaceTime call full-screen of an anthropomorphic mushroom character. Sweaty, holding phone close, frantic, whispering. FaceTime frame jittery. <strong>Mood</strong> — comedic parody of conspiracy YouTuber vibe. 9:16 vertical, 6 seconds.</div>
+    </div>
+
+    <div class="shot">
+      <div class="shot-head"><span class="shot-num">03</span><span class="shot-time">00:40 — 00:45</span><span class="shot-tag">Chute — Tupperware révélé</span></div>
+      <p class="shot-desc"><strong>La chute.</strong> Medium shot sur Brocco. Il se penche lentement, soulève le coussin — en dessous : un gros Tupperware transparent rempli de salade fraîche bien verte. Il le pose sur la table basse, dit sa ligne. Fade. Logo.</p>
+      <div class="shot-prompt-label">— Prompt Veo 3</div>
+      <div class="shot-prompt-body">[STYLE TOKENS] <strong>Shot</strong> — medium static shot on the couch. Broccoli leans slowly, lifts the cushion — revealing <strong>a large transparent Tupperware filled to the brim with fresh bright-green salad leaves</strong>. He places it on the coffee table, turns to pineapple who smiles. <strong>Transition</strong> — fade to black, "bedave" logo. 9:16 vertical, 5 seconds.</div>
+    </div>
+
+    <h4 class="label">— Script</h4>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:08 — ouverture + appel facetime</div>
+      <div class="sc-stage">Plan fixe canapé. Silence. Gameplay en pause. La TV se met à sonner — ringtone FaceTime.</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(calme, sans bouger)</div><div class="sc-line">Champi qui appelle.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Je décroche ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+
+      <div class="sc-cue">00:08–00:22 — la théorie</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-paren">(chuchoté, rapide)</div><div class="sc-line">Les gars. Les gars écoutez. J'suis passé hier chez vous. Sur votre table. Y'avait une feuille.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Les gars. C'est une feuille de surveillance.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Hein ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">C'est du matos. Ils écoutent à travers les plantes maintenant. C'est du véget-tech. J'ai vu sur YouTube.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-paren">(calme)</div><div class="sc-line">… c'est du basilic, Champi.</div></div>
+      <div class="sc-dialog" data-shout="true"><div class="sc-char">Champi</div><div class="sc-line">TU PARLES PAS.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Brocco tu dis plus un mot. Ils écoutent le mot « basilic » d'abord. Après ils viennent.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Le basilic du poulet au basilic ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Oui.</div></div>
+
+      <div class="sc-cue">00:22–00:32 — escalade + question nanas</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Faut que tu la jettes. Dans la poubelle de la rue. Pas celle d'en bas. Celle du parc. Pas le parc de votre rue. Le parc de la rue d'à côté.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Nan mais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Quoi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">T'as fumé quoi là ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-paren">(avec dignité)</div><div class="sc-line">J'ai rien fumé. Plus jamais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ok.</div></div>
+
+      <div class="sc-cue">00:30–00:38 — raccroche + débrief</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Je vous laisse. Je vais nulle part ce soir. J'passerai plus. Bonne nuit.</div></div>
+      <div class="sc-stage">Il raccroche.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Il est encore tombé sur un documentaire.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">C'est quand même vrai qu'il y avait une feuille ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais. C'est du basilic, j'l'ai acheté hier.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Cool.</div></div>
+
+      <div class="sc-cue chute">00:38–00:45 — chute</div>
+      <div class="sc-stage">Brocco se penche. Soulève le coussin. Gros Tupperware plein de salade fraîche verte. Il le pose sur la table basse.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-paren">(yeux sur la TV)</div><div class="sc-line">On s'en fait un sandwich ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(sourit)</div><div class="sc-line">Grave.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 02 -->
+  <article class="ep-prod" id="ep02">
+    <div class="ep-prod-head">
+      <div class="ep-prod-eyebrow">II.2 — Épisode 02 — pilote</div>
+      <h2 class="ep-prod-title"><em>Serge</em>.</h2>
+      <p class="ep-prod-lede">Serge le Cornichon débarque avec « un sandwich d'Amsterdam direct de son dealer, quinze références, deux cents balles ». Il récite l'historique. Brocco sent le sachet. C'est de la menthe de Franprix.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Serge admet qu'il a prêté 50 € à son dealer. Pas celui d'Amsterdam. <em>Celui de Franprix.</em></div></div>
+    </div>
+
+    <h4 class="label">— Structure</h4>
+    <div class="structure-strip">
+      <div class="beat-cell"><div class="bt">00–05</div><div class="bn">Flot</div><div class="bd">Serge parle</div></div>
+      <div class="beat-cell"><div class="bt">05–22</div><div class="bn">Quinze références</div><div class="bd">liste absurde</div></div>
+      <div class="beat-cell"><div class="bt">22–32</div><div class="bn">Démasquage</div><div class="bd">c'est de la menthe</div></div>
+      <div class="beat-cell"><div class="bt">32–40</div><div class="bn">Défense</div><div class="bd">« c'est un hybride »</div></div>
+      <div class="beat-cell"><div class="bt">40–45</div><div class="bn">Chute</div><div class="bd">50 € à Franprix</div></div>
+    </div>
+
+    <h4 class="label">— Script</h4>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:05 — serge en plein flot</div>
+      <div class="sc-stage">Plan canapé à trois. Serge au milieu. Il parle depuis un moment.</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-paren">(nasillard, gesticulant)</div><div class="sc-line">… donc. Donc moi. J'lui passe un signe. Il comprend direct.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Direct. Zéro mot. J'lui fais comme ça — <em>(il lève un sourcil)</em> — il comprend.</div></div>
+
+      <div class="sc-cue">00:05–00:22 — quinze références + clarification</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Il fait que pour des VIP. Il m'avait dit : Serge, tu es le dernier, t'es dans mon top 3.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Cool.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Il fait du street, du purple, du White Widow, du Animal Cookie, du Gelato, du OG Kush, du Lemon Haze, du Gorilla Glue, du Zkittlez, du Gelato 33, du Wedding Cake, du Runtz, du Sunset Sherbet, du Blue Dream, du Northern Lights.</div></div>
+      <div class="sc-silence">— silence 2s — Nanas se penche vers Brocco —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(à Brocco, bas)</div><div class="sc-line">Il dit quoi là ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-paren">(à Nanas, bas)</div><div class="sc-line">Il dit white widow, purple, gelato.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ça veut dire quoi ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">C'est des noms. De salade.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ah.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-paren">(fier, reprenant)</div><div class="sc-line">Ça fait 15 références.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+
+      <div class="sc-cue">00:22–00:32 — démasquage</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Donc j'lui passe un signe. Il comprend. Il m'envoie le colis. Boom. Demain.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… demain ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Nan nan c'est déjà là frère.</div></div>
+      <div class="sc-stage">Il tapote le sachet devant lui.</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Ça. C'est du Lemon Haze première coulée. Première. Y'a 3 personnes en France qui en ont.</div></div>
+      <div class="sc-stage">Brocco renifle.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Serge.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">C'est de la menthe.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">C'est de la menthe frère.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">… c'est un nouveau truc.</div></div>
+
+      <div class="sc-cue">00:32–00:40 — serge se défend</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">T'as acheté ça à Franprix.</div></div>
+      <div class="sc-silence">— silence 3s. « FRANPRIX » imprimé sur le sac —</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">C'est un hybride.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Serge.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">C'est une collab.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Le ticket de caisse est dans le sac, Serge.</div></div>
+      <div class="sc-silence">— silence 4s —</div>
+
+      <div class="sc-cue chute">00:40–00:45 — chute</div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-paren">(dignement)</div><div class="sc-line">J'lui ai prêté 50 € à mon dealer.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… à celui d'Amsterdam ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">Nan.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Serge</div><div class="sc-line">À celui de Franprix.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 03 -->
+  <article class="ep-prod" id="ep03">
+    <div class="ep-prod-head">
+      <div class="ep-prod-eyebrow">II.3 — Épisode 03 — pilote</div>
+      <h2 class="ep-prod-title"><em>Momo</em>.</h2>
+      <p class="ep-prod-lede">Momo l'Aubergine livre deux boulettes. Il parle du printemps, des fleurs, appelle les deux « les bébés ». D'un coup, il pète un câble pendant cinq secondes. Redevient chill. Repart paisible.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt"><em>« … on change de dealer ? »</em> — <em>« Ouais faudrait. »</em> — <em>« Tu veux une boulette ? »</em> — <em>« Ouais. »</em> Ils changeront jamais.</div></div>
+    </div>
+
+    <h4 class="label">— Structure</h4>
+    <div class="structure-strip">
+      <div class="beat-cell"><div class="bt">00–05</div><div class="bn">Chill</div><div class="bd">Momo déjà là</div></div>
+      <div class="beat-cell"><div class="bt">05–18</div><div class="bn">Printemps</div><div class="bd">poétique</div></div>
+      <div class="beat-cell"><div class="bt">18–25</div><div class="bn">Transaction</div><div class="bd">2 boulettes / 40 €</div></div>
+      <div class="beat-cell"><div class="bt">25–33</div><div class="bn">Crise</div><div class="bd">5s de fureur</div></div>
+      <div class="beat-cell"><div class="bt">33–40</div><div class="bn">Retour chill</div><div class="bd">mush love</div></div>
+      <div class="beat-cell"><div class="bt">40–45</div><div class="bn">Chute</div><div class="bd">on change pas</div></div>
+    </div>
+
+    <h4 class="label">— Script</h4>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:18 — ouverture chill + printemps</div>
+      <div class="sc-stage">Momo sur le fauteuil, sourit.</div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-paren">(voix grave, chaude)</div><div class="sc-line">Alors mes bébés, comment ça va aujourd'hui, tout va bien ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Le printemps arrive, vous sentez ça ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Moi j'adore le printemps. C'est joli. Les fleurs. Les gens qui sourient. Tout ça.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave. C'est beau.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Voilà. Nanas il comprend. Nanas il est dans la paix lui.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Moi je bosse sur moi en ce moment. Beaucoup. C'est long mais bon.</div></div>
+
+      <div class="sc-cue">00:18–00:25 — transaction</div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Bon alors. On avait dit deux boulettes ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Je vous ai pris des italiennes, comme tu aimes Brocco.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Cool.</div></div>
+      <div class="sc-stage">Brocco tend les billets en les comptant.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais. 40 ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">40 ouais.</div></div>
+      <div class="sc-silence">— silence 3s. Momo regarde les billets —</div>
+
+      <div class="sc-cue">00:25–00:33 — pétage de câble</div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-paren">(très calme)</div><div class="sc-line">Brocco.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-paren">(sourire léger)</div><div class="sc-line">T'as un problème ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… hein ?</div></div>
+      <div class="sc-dialog" data-shout="true"><div class="sc-char">Momo</div><div class="sc-line">T'ES UN INDIC C'EST ÇA BROCCO ?! T'ES UN INDIC ?!</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Qu—</div></div>
+      <div class="sc-dialog" data-shout="true"><div class="sc-char">Momo</div><div class="sc-line">FERME-LA NANAS.</div></div>
+      <div class="sc-dialog" data-shout="true"><div class="sc-char">Momo</div><div class="sc-line">POURQUOI TU COMPTES L'ARGENT DEVANT MOI BROCCO ?! POURQUOI ?!</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">J'ai pas compté.</div></div>
+      <div class="sc-dialog" data-shout="true"><div class="sc-char">Momo</div><div class="sc-line">TU COMPTAIS AVEC LES YEUX !</div></div>
+
+      <div class="sc-cue">00:33–00:40 — retour chill</div>
+      <div class="sc-stage">Longue inspiration. Visage détendu. Sourire retrouvé.</div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-paren">(ton doux)</div><div class="sc-line">Donc. Printemps. Joli hein ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Momo</div><div class="sc-line">Bon je vais vous laisser les bébés. Mush love. Portez-vous bien.</div></div>
+
+      <div class="sc-cue chute">00:40–00:45 — chute</div>
+      <div class="sc-stage">Fauteuil vide. Silence 4s.</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… on change de dealer ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… ouais faudrait.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Tu veux une boulette ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+    </div>
+  </article>
+
+  <!-- ==============================
+       CHAPITRE III
+  ============================== -->
+  <section class="chapter-opener" id="chap-3">
+    <div class="chap-eyebrow">— chapitre troisième</div>
+    <div class="chap-roman">III</div>
+    <h2>Les <em>scripts</em>.</h2>
+    <p class="chap-desc">Les sept autres épisodes de la saison en scripts complets. Dialogues chronométrés, silences marqués, chutes au format script cinéma. Prêts pour enregistrement voice-over.</p>
+  </section>
+
+  <!-- EP 04 -->
+  <article class="scr-ep" id="ep04">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.1 — Épisode 04</div>
+      <h2 class="scr-ep-title">Les <em>Chips</em>.</h2>
+      <p class="scr-ep-log">Il reste trois chips dans le paquet. Débat moral long. Négociation. Pierre-feuille-ciseaux.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Nanas a mangé les chips pendant que Brocco pitchait. <em>« T'as mangé les chips ? » — « Non. » — « … j'ai mangé que 2. La 3<sup>e</sup> elle était pour toi. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:10 — constat</div>
+      <div class="sc-stage">Plan canapé. Paquet de chips vert entre eux.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Nanas.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Y'a 3 chips.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ah.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Dans le paquet.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais j'ai compris.</div></div>
+
+      <div class="sc-cue">00:10–00:25 — négociation morale</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Tu veux faire quoi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Faut qu'on soit juste.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">On fait 1 chacun.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais mais y'en a 3.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">La 3<sup>e</sup> faut qu'on la partage.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">On peut pas casser une chips.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Si tu la casses ça fait 2 morceaux.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais mais c'est pas la même. C'est des morceaux. C'est pas des chips.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… ouais.</div></div>
+
+      <div class="sc-cue">00:25–00:35 — pierre-feuille-ciseaux</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(doucement)</div><div class="sc-line">On peut jouer à pierre-feuille-ciseaux.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ok.</div></div>
+      <div class="sc-stage">Brocco tend la main. Nanas tend la main. « 1, 2, 3 » des lèvres.</div>
+
+      <div class="sc-cue chute">00:35–00:45 — chute</div>
+      <div class="sc-stage">Brocco tourne la tête. Nanas a la bouche pleine. Miettes jaunes.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Nanas.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(bouche pleine)</div><div class="sc-line">Quoi ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">T'as mangé les chips.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Non.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(miettes toujours)</div><div class="sc-line">… j'ai mangé que 2.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Et la 3<sup>e</sup>.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Elle était pour toi.</div></div>
+      <div class="sc-stage">Nanas tend un minuscule bout de chips.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… merci.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais bah.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 05 -->
+  <article class="scr-ep" id="ep05">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.2 — Épisode 05</div>
+      <h2 class="scr-ep-title">Le <em>Livreur</em>.</h2>
+      <p class="scr-ep-log">Brocco et Nanas attendent Kévin l'épi de maïs. Il arrive et reste trente secondes à raconter son divorce.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt"><em>« Il allait bien Kévin ? » — « Non. » — « Cool. » — « Enfin, cool, non. » — « Cool j'ai faim je veux dire. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:18 — l'attente + théorie sur kévin</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Tu crois il arrive quand Kévin ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Bientôt.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">J'espère que ça va Kévin.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">La dernière fois il avait l'air triste.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Il est toujours triste.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave mais là c'était plus que d'habitude.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">T'as vu ses tweets ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Il a écrit « si je meurs cette nuit personne va savoir ».</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">…</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Il a eu 12 likes.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">C'est pas mal.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Pour un livreur ouais.</div></div>
+
+      <div class="sc-cue">00:25–00:38 — kévin arrive</div>
+      <div class="sc-stage">Sonnerie. Longs silences. Brocco finit par se lever off-screen.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-paren">(off)</div><div class="sc-line">Salut Kévin.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Kévin</div><div class="sc-paren">(off, fatiguée)</div><div class="sc-line">Salut Brocco. Pizza margherita.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Kévin</div><div class="sc-paren">(off)</div><div class="sc-line">… ma mère m'a rappelé hier.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-paren">(off)</div><div class="sc-line">… ah.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Kévin</div><div class="sc-paren">(off)</div><div class="sc-line">Elle m'a dit que j'étais décevant.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Kévin</div><div class="sc-paren">(off)</div><div class="sc-line">Voilà. Bonne pizza.</div></div>
+
+      <div class="sc-cue chute">00:38–00:45 — chute</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Il allait bien Kévin ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Cool.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Enfin, cool, non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Cool j'ai faim je veux dire.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 06 -->
+  <article class="scr-ep" id="ep06">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.3 — Épisode 06</div>
+      <h2 class="scr-ep-title">Le <em>Rêve</em>.</h2>
+      <p class="scr-ep-log">Champi raconte un rêve très long et décousu. Abeilles qui parlent espagnol. Cerf avec deux heures de retard.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt"><em>« Tu crois que ça veut dire quoi ? » — « J'ai pas écouté. » — « … ok. »</em> Nanas : <em>« Moi je pense que c'est ta mère. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:08 — champi lance</div>
+      <div class="sc-stage">Canapé à trois. Champi au milieu, yeux brillants.</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Les gars.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">J'ai fait un rêve. Cette nuit.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+
+      <div class="sc-cue">00:08–00:28 — le rêve</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">J'étais dans une forêt. Mais c'était pas une forêt normale. C'était une forêt de CUSTARD.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… de quoi ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Custard. La crème anglaise.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ah.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et y'avait des abeilles. Mais elles parlaient espagnol.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et elles me disaient « hola, hola, tu as perdu ton chapeau ». Mais en espagnol.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et j'ai regardé et j'avais perdu mon chapeau. Donc je l'ai cherché. Des heures.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Dans le rêve.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Dans le rêve ouais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et puis j'ai rencontré un cerf. Avec un seul bois. Qui avait deux heures de retard.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Pour quoi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">J'sais pas. Il m'a pas dit.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et après… j'ai retrouvé mon chapeau. Mais c'était pas mon chapeau. C'était celui du cerf.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Et le cerf il m'a dit merci. En français. Et je me suis réveillé.</div></div>
+
+      <div class="sc-cue chute">00:28–00:45 — chute</div>
+      <div class="sc-silence">— silence 4s —</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Tu crois que ça veut dire quoi ?</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">J'ai pas écouté.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">… ok.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(doucement)</div><div class="sc-line">Moi je pense que c'est ta mère.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 07 -->
+  <article class="scr-ep" id="ep07">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.4 — Épisode 07</div>
+      <h2 class="scr-ep-title"><em>Radiskov</em>.</h2>
+      <p class="scr-ep-log">Radiskov débarque : <em>Plant-BNB</em> (Airbnb pour plantes). Brocco dit non quatre fois. Il repart.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt"><em>« Ça peut marcher quand même. » — « Non. » — « Si. » — « Non. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:12 — le pitch</div>
+      <div class="sc-stage">Radiskov debout devant la table basse, briefcase ouvert, slide « PLANT-BNB™ ».</div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-paren">(faux russo-cali, rapide)</div><div class="sc-line">LES GARS. Les gars ok. Écoutez-moi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">Plant-BNB.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Hein ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">Airbnb. Pour plantes.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">TU LOUES TA PLANTE. Les gens ils viennent. Ils la regardent. Ils payent 12 €.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Pourquoi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">Parce que. Les gens ils ont pas le temps d'avoir des plantes.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Si.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">Non Brocco. Les gens sont BUSY. Ils veulent JUST du vert.</div></div>
+
+      <div class="sc-cue">00:12–00:25 — doute + scale</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ok mais payer pour regarder une plante.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">15 minutes. 12 €.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Nan.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">On scale. Paris d'abord. Lyon après. Series A. 2 millions.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Nan.</div></div>
+
+      <div class="sc-cue">00:25–00:35 — la plante morte</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Radiskov. On a déjà une plante.</div></div>
+      <div class="sc-stage">Il pointe la plante morte dans le coin.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Elle est morte.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">DONC y'a un besoin.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Nan.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Radiskov</div><div class="sc-line">Ok. Je reviens dans 2 semaines avec Plant-BNB 2.</div></div>
+
+      <div class="sc-cue chute">00:35–00:45 — chute</div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… ça peut marcher quand même.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Non.</div></div>
+      <div class="sc-silence">— silence 2s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Si.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Non.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 08 -->
+  <article class="scr-ep" id="ep08">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.5 — Épisode 08</div>
+      <h2 class="scr-ep-title">La <em>Voisine</em>.</h2>
+      <p class="scr-ep-log">La voisine tomate cerise sonne. Elle cherche son basilic posé chez eux il y a trois semaines.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Ils lui donnent la plante morte. <em>« Elle est un peu sèche. » — « Merci mon petit. »</em> <em>« On a plus de plante. » — « Mmh. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:10 — on sonne</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">On sonne.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-stage">On resonne. Nanas soupire, se lève off.</div>
+
+      <div class="sc-cue">00:10–00:25 — la voisine</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(off)</div><div class="sc-line">Oui ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off, vieille douce)</div><div class="sc-line">Bonjour jeune homme.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off)</div><div class="sc-line">Je cherche mon basilic. Je l'ai posé chez vous il y a trois semaines. Pour que vous le donniez à Madame Cartonnier.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(off)</div><div class="sc-line">… oui.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off)</div><div class="sc-line">Elle est jamais passée Madame Cartonnier ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(off)</div><div class="sc-line">… non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off)</div><div class="sc-line">Ah. Est-ce que je pourrais le récupérer s'il vous plaît.</div></div>
+
+      <div class="sc-cue">00:25–00:35 — conciliabule</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Brocco. La voisine du 3<sup>e</sup>. Elle veut son basilic.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">… ah.</div></div>
+      <div class="sc-stage">Brocco regarde la plante morte. Nanas aussi.</div>
+      <div class="sc-silence">— silence 4s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">On lui donne la plante ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… ouais.</div></div>
+
+      <div class="sc-cue chute">00:35–00:45 — chute</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(off)</div><div class="sc-line">Tenez madame.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off)</div><div class="sc-line">Elle est un peu sèche.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(off)</div><div class="sc-line">Oui.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Voisine</div><div class="sc-paren">(off)</div><div class="sc-line">Merci mon petit.</div></div>
+      <div class="sc-stage">Porte. Nanas revient. Silence 4s.</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… on a plus de plante.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 09 -->
+  <article class="scr-ep" id="ep09">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.6 — Épisode 09</div>
+      <h2 class="scr-ep-title"><em>Avo</em>.</h2>
+      <p class="scr-ep-log">Avo débarque en crise. Récite un poème. Nanas appelle Champi en FaceTime pour l'aide thé. Avo s'endort.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Avo dort sous un plaid. <em>« Il écrit de mieux en mieux Avo. » — « Grave. Mais c'est toujours triste. »</em></div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:12 — avo débarque</div>
+      <div class="sc-stage">Avo au milieu du canapé, sanglots doux.</div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-paren">(renifle)</div><div class="sc-line">… les gars.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais Avo.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">L'automne. J'ai commencé à brunir.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ah.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">Sur le côté.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">C'est rien ça.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">C'est le début.</div></div>
+
+      <div class="sc-cue">00:12–00:25 — le poème</div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">J'ai écrit un poème.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-paren">(théâtral)</div><div class="sc-line">L'automne sur ma peau verte / Avance comme un voleur / Je ne suis pas un fruit / Je ne suis pas un légume / Je suis un drame.</div></div>
+      <div class="sc-silence">— silence 5s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">C'est beau.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Il y a d'autres strophes ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">Oui. Mais je peux pas les dire là. Je suis trop.</div></div>
+
+      <div class="sc-cue">00:25–00:35 — thé + champi facetime</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Tu veux du thé ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">Oui.</div></div>
+      <div class="sc-stage">Champi apparaît sur la TV.</div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-paren">(facetime)</div><div class="sc-line">Les gars.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Champi. Avo est là. Il veut du thé.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">Ok. Infuser 4 minutes pas plus. Du miel pas du sucre. Le sucre c'est le gouvernement.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Champi</div><div class="sc-line">L'automne tu sais ça s'appelle « rassemblement ». En japonais.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-line">… ah.</div></div>
+
+      <div class="sc-cue">00:35–00:40 — plaid</div>
+      <div class="sc-stage">Brocco pose un plaid sur lui.</div>
+      <div class="sc-dialog"><div class="sc-char">Avo</div><div class="sc-paren">(sous plaid)</div><div class="sc-line">Merci Brocco.</div></div>
+      <div class="sc-silence">— silence 8s. Avo s'endort —</div>
+
+      <div class="sc-cue chute">00:40–00:45 — chute</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-paren">(chuchoté)</div><div class="sc-line">Il dort.</div></div>
+      <div class="sc-silence">— silence 3s —</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… il écrit de mieux en mieux Avo.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Grave. Mais c'est toujours triste.</div></div>
+    </div>
+  </article>
+
+  <!-- EP 10 -->
+  <article class="scr-ep" id="ep10">
+    <div class="scr-ep-head">
+      <div class="scr-ep-num">III.7 — Épisode 10 — finale saison</div>
+      <h2 class="scr-ep-title">Le <em>Dimanche</em>.</h2>
+      <p class="scr-ep-log">Brocco et Nanas disent « faudrait » pendant quarante-cinq secondes. Rien ne se fait. On sonne — ils ouvrent pas.</p>
+      <div class="chute-card"><div class="lbl">Chute</div><div class="txt">Quelqu'un sonne. <em>« Faudrait qu'on ouvre. » — « Ouais faudrait. »</em> Ils ouvrent pas. Fade. Ils ont rien fait du tout. Et c'est exactement ce qu'ils voulaient.</div></div>
+    </div>
+    <div class="script-block">
+      <div class="sc-cue">00:00–00:10 — le constat dimanche</div>
+      <div class="sc-stage">Plan fixe canapé. TV allumée. Silence 4s.</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Dimanche.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave.</div></div>
+      <div class="sc-silence">— silence 4s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Faudrait qu'on fasse un truc.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais faudrait.</div></div>
+
+      <div class="sc-cue">00:10–00:22 — propositions</div>
+      <div class="sc-silence">— silence 5s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Genre. Une sortie.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-silence">— silence 4s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Tu veux sortir ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Moi non plus.</div></div>
+
+      <div class="sc-cue">00:22–00:32 — la pizza + la flemme</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">On pourrait ranger.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais faudrait.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">La pizza elle est là depuis.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Jeudi.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Grave. On la jette ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais faudrait.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">T'as la force ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Non.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Moi non plus.</div></div>
+
+      <div class="sc-cue">00:32–00:40 — on sonne</div>
+      <div class="sc-silence">— silence 5s. On sonne —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Faudrait qu'on ouvre.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Ouais faudrait.</div></div>
+      <div class="sc-silence">— silence. Ils ouvrent pas —</div>
+
+      <div class="sc-cue chute">00:40–00:45 — chute · finale saison</div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Brocco.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Je crois que je suis bien là.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Mmh.</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">Toi aussi ?</div></div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais.</div></div>
+      <div class="sc-silence">— silence 4s —</div>
+      <div class="sc-dialog"><div class="sc-char">Brocco</div><div class="sc-line">Ouais bah…</div></div>
+      <div class="sc-dialog"><div class="sc-char">Nanas</div><div class="sc-line">… grave.</div></div>
+      <div class="sc-stage">Fade lent. Logo bedave. Bourdonnement TV qui s'éteint.</div>
+    </div>
+  </article>
+
+  <!-- COLOPHON -->
+  <section class="colophon">
+    <div class="co-mark">bedave.</div>
+    <div class="co-phrase">Ouais bah… grave.</div>
+    <div class="co-meta">
+      Dossier de série · saison 01<br>
+      Version 3.0 · 14 avril 2026<br><br>
+      Inspiré de <em>Bloqués</em> d'Orelsan &amp; Gringe<br>
+      Série animée · Instagram Reels · 10 × 45 s
+    </div>
+  </section>
+
+</main>
+
+</div>
+
+<!-- Back to top button -->
+<a href="#top" class="back-top" id="backTop" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</a>
+
+<script>
+(function(){
+  const progress = document.getElementById('progress');
+  const backTop = document.getElementById('backTop');
+  const menuToggle = document.getElementById('menuToggle');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('overlay');
+  const drawerClose = document.getElementById('drawerClose');
+  const mobileTOC = document.getElementById('mobileTOC');
+  const sidebar = document.getElementById('tocSidebar');
+
+  // Clone TOC into mobile drawer
+  if (sidebar && mobileTOC) {
+    const groups = sidebar.querySelectorAll('.toc-group');
+    groups.forEach(g => mobileTOC.appendChild(g.cloneNode(true)));
+  }
+
+  // Progress bar
+  function updateProgress(){
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progress.style.width = pct + '%';
+    // Back to top visibility
+    if (scrollTop > 600) { backTop.classList.add('show'); }
+    else { backTop.classList.remove('show'); }
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Menu drawer
+  function openDrawer(){
+    drawer.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer(){
+    drawer.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  if (menuToggle) menuToggle.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  // Close drawer on link click
+  drawer.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') closeDrawer();
+  });
+
+  // ESC closes drawer
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // Active TOC tracking
+  const sections = document.querySelectorAll('main > section[id], main > article[id]');
+  const tocLinks = document.querySelectorAll('.toc-sidebar a[href^="#"]');
+
+  if ('IntersectionObserver' in window && sections.length && tocLinks.length) {
+    const byHash = {};
+    tocLinks.forEach(a => {
+      const hash = a.getAttribute('href');
+      byHash[hash] = a;
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const a = byHash['#' + entry.target.id];
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(s => observer.observe(s));
+  }
+})();
+</script>
+
+</body>
+</html>
